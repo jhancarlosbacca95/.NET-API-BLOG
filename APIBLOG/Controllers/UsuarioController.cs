@@ -17,11 +17,12 @@ namespace APIBLOG.Controllers
             _usuarioService = usuarioService;
         }
         [HttpGet]
-        public IActionResult Listar()
+        public async Task<IActionResult> Listar()
         {
             try
             {
-                return StatusCode(StatusCodes.Status200OK, new { message = "Ok", Response = _usuarioService.Get() });
+                var lista = await _usuarioService.Get();
+                return Ok(new { message = "Ok", Response = lista });
             }
             catch (Exception ex)
             {
@@ -29,16 +30,57 @@ namespace APIBLOG.Controllers
             }
         }
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Usuario us)
+        public async Task<IActionResult> Agregar([FromBody] Usuario us)
         {
             try
             {
                 await _usuarioService.Save(us);
-                return  Ok();
+                return Ok();
             }
             catch (Exception ex)
             {
 
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(Guid id, [FromBody] Usuario us)
+        {
+            try
+            {
+                bool Actualizado = await _usuarioService.Update(id, us);
+                if (Actualizado==false)
+                {
+                    return NotFound(new { message="No se encontro ningun usuario con ese Id" });
+                }
+                else
+                {
+                    return Ok(new {message = "Usuario Actualizado" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,new { message = ex.Message });
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete(Guid id)
+        {
+            try
+            {
+                bool Eliminado =await _usuarioService.Delete(id);
+                if (Eliminado == false)
+                {
+                    return NotFound(new { message = "Usuario no encontrado" });
+                }
+                else
+                {
+                    return Ok(new { message = "Usuario eliminado con exito" });
+                }
+            }
+            catch (Exception ex)
+            {
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
