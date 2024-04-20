@@ -34,8 +34,15 @@ namespace APIBLOG.Controllers
         {
             try
             {
-                await _usuarioService.Save(us);
-                return Ok();
+                bool respuesta = await _usuarioService.Save(us);
+                if (!respuesta)
+                {
+                    return BadRequest(new {message= "No se pudo guardar el usuario" });
+                }
+                else 
+                {
+                    return Ok(new { message = "Usuario guardado con exito"});
+                }
             }
             catch (Exception ex)
             {
