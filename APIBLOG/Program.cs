@@ -16,6 +16,7 @@ builder.Services.AddSqlServer<ApiblogContext>(builder.Configuration.GetConnectio
 
 
 builder.Services.AddScoped<IUsuarioService,UsuarioService>();
+builder.Services.AddScoped<ICategoriaService,CategoriaService>();
 
 var app = builder.Build();
 
