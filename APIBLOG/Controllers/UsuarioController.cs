@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using APIBLOG.Services;
 using APIBLOG.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace APIBLOG.Controllers
 {
@@ -16,6 +17,7 @@ namespace APIBLOG.Controllers
         {
             _usuarioService = usuarioService;
         }
+        //[Authorize]
         [HttpGet]
         public async Task<IActionResult> Listar()
         {
