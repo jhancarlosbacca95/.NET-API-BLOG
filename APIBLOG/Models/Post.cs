@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace APIBLOG.Models;
 
@@ -20,10 +21,10 @@ public partial class Post
     public string? Imagen { get; set; }
 
     public bool? Activo { get; set; }
-
+    [JsonIgnore]
     public virtual ICollection<Comentario> Comentarios { get; set; } = new List<Comentario>();
-
+    [JsonIgnore]
     public virtual Usuario? IdUsuarioNavigation { get; set; }
-
+    [JsonIgnore]
     public virtual ICollection<Categoria> IdCategoria { get; set; } = new List<Categoria>();
 }

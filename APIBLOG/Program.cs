@@ -21,6 +21,7 @@ builder.Services.AddSqlServer<ApiblogContext>(builder.Configuration.GetConnectio
 
 builder.Services.AddScoped<IUsuarioService,UsuarioService>();
 builder.Services.AddScoped<ICategoriaService,CategoriaService>();
+builder.Services.AddScoped<IPostService,PostService>();
 builder.Services.AddScoped<IAutorizacionService, AutorizacionService>();
 
 var key = builder.Configuration.GetValue<string>("JwtSettings:key");

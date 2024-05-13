@@ -1,11 +1,12 @@
 ﻿using APIBLOG.Models;
+using APIBLOG.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.Json;
 using System.Data.Common;
 
 namespace APIBLOG.Services
 {
-    public class PostService
+    public class PostService:IPostService
     {
         private readonly ApiblogContext _context;
 
@@ -58,14 +59,13 @@ namespace APIBLOG.Services
                 var categorias = await _context.Categorias.Where(c => idsCat.Contains(c.IdCategoria)).ToListAsync();
 
                 //obtener los ids de los posts asociados a las categorias
-                var postsIds = categorias.SelectMany(c => c.IdPosts.Select(p=>p.IdPost)).Distinct();
-
+                var postsIds = categorias.SelectMany(c => c.IdPosts.Select(p=>p.IdPost)).Distinct().ToList();
 
                 //obtener los posts con dichas ids
                 var posts = await _context.Posts
-                    .Where(p => postsIds.Contains(p.IdPost))
-                    .ToListAsync();
-
+                            .Include(p => p.IdCategoria)
+                            .Where(p => p.IdCategoria.Any(c => idsCat.Contains(c.IdCategoria)))
+                            .ToListAsync();
                 return posts;
             }
             catch (DbException ex)
