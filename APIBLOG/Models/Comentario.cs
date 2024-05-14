@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace APIBLOG.Models;
 
@@ -17,7 +18,8 @@ public partial class Comentario
 
     public bool? Activo { get; set; }
 
+    [JsonIgnore]
     public virtual Post? IdPostNavigation { get; set; }
-
+    [JsonIgnore]
     public virtual Usuario? IdUsuarioNavigation { get; set; }
 }

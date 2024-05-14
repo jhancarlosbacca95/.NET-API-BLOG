@@ -43,7 +43,7 @@ namespace APIBLOG.Controllers
             try
             {
                 bool respuesta = await _categoriaService.Save(cat);
-                if (respuesta==false) 
+                if (!respuesta) 
                 {
                     return NotFound(new { Message = "No se pudo guardar la categoria" });
                 }
