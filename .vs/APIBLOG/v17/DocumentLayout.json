@@ -1,7 +1,24 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\C#\\APIBLOG\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{5A86E953-1F2C-43CF-AE29-DAEF5652FC45}|APIBLOG\\APIBLOG.csproj|c:\\c#\\apiblog\\apiblog\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5A86E953-1F2C-43CF-AE29-DAEF5652FC45}|APIBLOG\\APIBLOG.csproj|solutionrelative:apiblog\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5A86E953-1F2C-43CF-AE29-DAEF5652FC45}|APIBLOG\\APIBLOG.csproj|c:\\c#\\apiblog\\apiblog\\services\\comentarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5A86E953-1F2C-43CF-AE29-DAEF5652FC45}|APIBLOG\\APIBLOG.csproj|solutionrelative:apiblog\\services\\comentarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5A86E953-1F2C-43CF-AE29-DAEF5652FC45}|APIBLOG\\APIBLOG.csproj|c:\\c#\\apiblog\\apiblog\\services\\interfaces\\icomentarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5A86E953-1F2C-43CF-AE29-DAEF5652FC45}|APIBLOG\\APIBLOG.csproj|solutionrelative:apiblog\\services\\interfaces\\icomentarioservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5A86E953-1F2C-43CF-AE29-DAEF5652FC45}|APIBLOG\\APIBLOG.csproj|c:\\c#\\apiblog\\apiblog\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5A86E953-1F2C-43CF-AE29-DAEF5652FC45}|APIBLOG\\APIBLOG.csproj|solutionrelative:apiblog\\controllers\\postcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,8 +26,60 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 0,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\C#\\APIBLOG\\APIBLOG\\Program.cs",
+              "RelativeDocumentMoniker": "APIBLOG\\Program.cs",
+              "ToolTip": "C:\\C#\\APIBLOG\\APIBLOG\\Program.cs",
+              "RelativeToolTip": "APIBLOG\\Program.cs",
+              "ViewState": "AQIAAAwAAAAAAAAAAAAAACAAAAAqAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-14T16:50:21.599Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IComentarioService.cs",
+              "DocumentMoniker": "C:\\C#\\APIBLOG\\APIBLOG\\Services\\Interfaces\\IComentarioService.cs",
+              "RelativeDocumentMoniker": "APIBLOG\\Services\\Interfaces\\IComentarioService.cs",
+              "ToolTip": "C:\\C#\\APIBLOG\\APIBLOG\\Services\\Interfaces\\IComentarioService.cs",
+              "RelativeToolTip": "APIBLOG\\Services\\Interfaces\\IComentarioService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYAAAA8AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-14T22:51:09.638Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ComentarioService.cs",
+              "DocumentMoniker": "C:\\C#\\APIBLOG\\APIBLOG\\Services\\ComentarioService.cs",
+              "RelativeDocumentMoniker": "APIBLOG\\Services\\ComentarioService.cs",
+              "ToolTip": "C:\\C#\\APIBLOG\\APIBLOG\\Services\\ComentarioService.cs",
+              "RelativeToolTip": "APIBLOG\\Services\\ComentarioService.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAgAAAA1AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-14T17:57:37.413Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "PostController.cs",
+              "DocumentMoniker": "C:\\C#\\APIBLOG\\APIBLOG\\Controllers\\PostController.cs",
+              "RelativeDocumentMoniker": "APIBLOG\\Controllers\\PostController.cs",
+              "ToolTip": "C:\\C#\\APIBLOG\\APIBLOG\\Controllers\\PostController.cs",
+              "RelativeToolTip": "APIBLOG\\Controllers\\PostController.cs",
+              "ViewState": "AQIAAIgAAAAAAAAAAAAUwJAAAAANAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-05-14T16:50:44.385Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:129:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
