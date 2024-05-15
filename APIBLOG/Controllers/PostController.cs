@@ -17,7 +17,7 @@ namespace APIBLOG.Controllers
             _postService = postService;
         }
 
-        [HttpGet]
+        [HttpGet("todos")]
         public async Task<IActionResult> ObtenerPosts()
         {
             try
@@ -59,7 +59,28 @@ namespace APIBLOG.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("PorUsuario{idUsuario}")]
+        public async Task<IActionResult> ObtenerPorId(Guid idUsuario)
+        {
+            try
+            {
+                var posts = await _postService.GetByUser(idUsuario);
+                if (posts == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(new { Message = "Ok", Response = posts });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en el servidor", ex);
+            }
+        }
+
+        [HttpGet("PorCategorias")]
         public async Task<IActionResult> ObtenerPorId([FromQuery] List<int> idCategorias)
         {
             try
@@ -82,7 +103,7 @@ namespace APIBLOG.Controllers
 
         public class PostConCategoriasDTO
         {
-            public Post NuevoPost { get; set; }
+            public Post Post { get; set; }
             public List<int> CategoriasIds { get; set; }
         }
 
@@ -91,7 +112,7 @@ namespace APIBLOG.Controllers
         {
             try
             {
-                var resultado = await _postService.Save(postYCategoria.NuevoPost, postYCategoria.CategoriasIds);
+                var resultado = await _postService.Save(postYCategoria.Post, postYCategoria.CategoriasIds);
                 if (!resultado)
                 {
                     return BadRequest();
@@ -112,7 +133,7 @@ namespace APIBLOG.Controllers
         {
             try
             {
-                var resultado = await _postService.Update(idPost, postConCategoriasDTO.NuevoPost, postConCategoriasDTO.CategoriasIds);
+                var resultado = await _postService.Update(idPost, postConCategoriasDTO.Post, postConCategoriasDTO.CategoriasIds);
                 if (!resultado)
                 {
                     return NotFound("No se encontro el Post a eliminar");

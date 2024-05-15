@@ -200,5 +200,29 @@ namespace APIBLOG.Services
             }
 
         }
+
+        public async Task<ICollection<Post>> GetByUser(Guid idUser)
+        {
+            try
+            {
+                var posts = await _context.Posts.Where(c => c.IdUsuario == idUser).ToListAsync();
+                if (posts.Count == 0)
+                {
+                    return null;
+                }
+                else
+                {
+                    return posts;
+                }
+
+            }
+            catch (DbException ex)
+            {
+                throw new Exception($"Error en la base de datos, Error: {ex.Message}");
+            }catch (Exception ex)
+            {
+                throw new Exception("Ha ocurrido un error", ex);
+            }
+        }
     }
 }
