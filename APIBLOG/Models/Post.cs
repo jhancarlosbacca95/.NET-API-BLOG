@@ -26,5 +26,5 @@ public partial class Post
     [JsonIgnore]
     public virtual Usuario? IdUsuarioNavigation { get; set; }
     [JsonIgnore]
-    public virtual ICollection<Categoria> IdCategoria { get; set; } = new List<Categoria>();
+    public virtual ICollection<Etiqueta> IdEtiqueta { get; set; } = new List<Etiqueta>();
 }

@@ -20,7 +20,7 @@ builder.Services.AddSqlServer<ApiblogContext>(builder.Configuration.GetConnectio
 
 
 builder.Services.AddScoped<IUsuarioService,UsuarioService>();
-builder.Services.AddScoped<ICategoriaService,CategoriaService>();
+builder.Services.AddScoped<IEtiquetaService,EtiquetaService>();
 builder.Services.AddScoped<IPostService,PostService>();
 builder.Services.AddScoped<IAutorizacionService, AutorizacionService>();
 builder.Services.AddScoped<IComentarioService, ComentarioService>();

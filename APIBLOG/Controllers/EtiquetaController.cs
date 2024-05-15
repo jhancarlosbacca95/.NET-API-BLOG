@@ -9,19 +9,18 @@ namespace APIBLOG.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategoriaController : ControllerBase
+    public class EtiquetaController : ControllerBase
     {
-        private readonly ICategoriaService _categoriaService;
-        public CategoriaController(ICategoriaService categoriaS) {
-            _categoriaService = categoriaS;
+        private readonly IEtiquetaService _etiquetaService;
+        public EtiquetaController(IEtiquetaService categoriaS) {
+            _etiquetaService = categoriaS;
         }
-
         [HttpGet]
         public async Task<IActionResult> Listar() 
         {
             try
             {
-                var lista = await _categoriaService.Get();
+                var lista = await _etiquetaService.Get();
                 if (lista == null)
                 {
                     return NotFound();
@@ -38,18 +37,18 @@ namespace APIBLOG.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Save([FromBody]Categoria cat) 
+        public async Task<IActionResult> Save([FromBody]Etiqueta eti) 
         {
             try
             {
-                bool respuesta = await _categoriaService.Save(cat);
+                bool respuesta = await _etiquetaService.Save(eti);
                 if (!respuesta) 
                 {
                     return NotFound(new { Message = "No se pudo guardar la categoria" });
                 }
                 else
                 {
-                    return Ok(new { Message = "Categoria guardada con exito" });
+                    return Ok(new { Message = "Etiqueta guardada con exito" });
                 }
 
             }
@@ -60,18 +59,18 @@ namespace APIBLOG.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id,[FromBody] Categoria cat)
+        public async Task<IActionResult> Update(int id,[FromBody] Etiqueta eti)
         {
             try
             {
-                bool respuesta =await _categoriaService.Update(id, cat);
+                bool respuesta = await _etiquetaService.Update(id, eti);
                 if (!respuesta)
                 {
-                    return NotFound(new { message = "Categoria no encontrada" });
+                    return NotFound(new { message = "Etiqueta no encontrada" });
                 }
                 else
                 {
-                    return Ok(new { Message = "Categoria modificada correctamente" });
+                    return Ok(new { Message = "Etiqueta modificada correctamente" });
                 }
             }
             catch (Exception ex)
@@ -85,14 +84,14 @@ namespace APIBLOG.Controllers
         {
             try
             {
-                bool respuesta = await _categoriaService.Delete(id);
+                bool respuesta = await _etiquetaService.Delete(id);
                 if (!respuesta)
                 {
-                    return NotFound(new { message = "Categoria no encontrada" });
+                    return NotFound(new { message = "Etiqueta no encontrada" });
                 }
                 else
                 {
-                    return Ok(new { Message = "Categoria Eliminada correctamente" });
+                    return Ok(new { Message = "Etiqueta Eliminada correctamente" });
                 }
             }
             catch (Exception ex)

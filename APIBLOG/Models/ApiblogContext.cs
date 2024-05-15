@@ -15,7 +15,7 @@ public partial class ApiblogContext : DbContext
     {
     }
 
-    public virtual DbSet<Categoria> Categorias { get; set; }
+    public virtual DbSet<Etiqueta> Etiquetas { get; set; }
 
     public virtual DbSet<Comentario> Comentarios { get; set; }
 
@@ -30,29 +30,29 @@ public partial class ApiblogContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Categoria>(entity =>
+        modelBuilder.Entity<Etiqueta>(entity =>
         {
-            entity.HasKey(e => e.IdCategoria).HasName("PK__CATEGORI__A3C02A1086117A8A");
+            entity.HasKey(e => e.IdEtiqueta).HasName("PK__ETIQUETA__A3C02A1086117A8A");
 
-            entity.ToTable("CATEGORIA");
+            entity.ToTable("ETIQUETA");
 
             entity.Property(e => e.Nombre).HasMaxLength(50);
 
             entity.HasMany(d => d.IdPosts).WithMany(p => p.IdCategoria)
                 .UsingEntity<Dictionary<string, object>>(
-                    "PostCategorium",
+                    "PostEtiqueta",
                     r => r.HasOne<Post>().WithMany()
                         .HasForeignKey("IdPost")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__POST_CATE__IdPos__693CA210"),
-                    l => l.HasOne<Categoria>().WithMany()
-                        .HasForeignKey("IdCategoria")
+                        .HasConstraintName("FK__POST_ETI__IdPos__693CA210"),
+                    l => l.HasOne<Etiqueta>().WithMany()
+                        .HasForeignKey("IdEtiqueta")
                         .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__POST_CATE__IdCat__68487DD7"),
+                        .HasConstraintName("FK__POST_ETI__IdEti__68487DD7"),
                     j =>
                     {
-                        j.HasKey("IdCategoria", "IdPost").HasName("PK__POST_CAT__6C4DE1C4DCBE7F07");
-                        j.ToTable("POST_CATEGORIA");
+                        j.HasKey("IdEtiqueta", "IdPost").HasName("PK__POST_ETI__6C4DE1C4DCBE7F07");
+                        j.ToTable("POST_ETIQUETA");
                     });
         });
 

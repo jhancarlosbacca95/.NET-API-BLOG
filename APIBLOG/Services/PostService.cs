@@ -51,20 +51,20 @@ namespace APIBLOG.Services
             }
         }
 
-        public async Task<ICollection<Post>>GetByCategoria(List<int> idsCat)
+        public async Task<ICollection<Post>>GetByEtiquetas(List<int> idsEti)
         {
             try
             {
-                //buscar las categorias por sus ids
-                var categorias = await _context.Categorias.Where(c => idsCat.Contains(c.IdCategoria)).ToListAsync();
+                //buscar las etiquetas por sus ids
+                var etiquetas = await _context.Etiquetas.Where(c => idsEti.Contains(c.IdEtiqueta)).ToListAsync();
 
-                //obtener los ids de los posts asociados a las categorias
-                var postsIds = categorias.SelectMany(c => c.IdPosts.Select(p=>p.IdPost)).Distinct().ToList();
+                //obtener los ids de los posts asociados a las etiquetas
+                var postsIds = etiquetas.SelectMany(c => c.IdPosts.Select(p=>p.IdPost)).Distinct().ToList();
 
                 //obtener los posts con dichas ids
                 var posts = await _context.Posts
-                            .Include(p => p.IdCategoria)
-                            .Where(p => p.IdCategoria.Any(c => idsCat.Contains(c.IdCategoria)))
+                            .Include(p => p.IdEtiqueta)
+                            .Where(p => p.IdEtiqueta.Any(c => idsEti.Contains(c.IdEtiqueta)))
                             .ToListAsync();
                 return posts;
             }
@@ -77,21 +77,21 @@ namespace APIBLOG.Services
                 throw new Exception("Error al modificar el post", ex);
             }
         }
-        public async Task<bool> Save(Post post,List<int> CategoriasIds) 
+        public async Task<bool> Save(Post post,List<int> EtiquetasIds) 
         {
             try
             {
                 _context.Add(post);
 
-                if (CategoriasIds != null && CategoriasIds.Any())
+                if (EtiquetasIds != null && EtiquetasIds.Any())
                 {
-                    foreach (var categoriaId in CategoriasIds)
+                    foreach (var etiquetaId in EtiquetasIds)
                     {
-                        var categoria = await _context.Categorias.FindAsync(categoriaId);
-                        if (categoria != null) 
+                        var etiqueta = await _context.Etiquetas.FindAsync(etiquetaId);
+                        if (etiqueta != null) 
                         {
-                            post.IdCategoria.Add(categoria);
-                            categoria.IdPosts.Add(post);
+                            post.IdEtiqueta.Add(etiqueta);
+                            etiqueta.IdPosts.Add(post);
                         }
                     }
                 }
@@ -107,7 +107,7 @@ namespace APIBLOG.Services
             }
         }
 
-        public async Task<bool> Update(int id,Post post,List<int> CategoriasIds) 
+        public async Task<bool> Update(int id,Post post,List<int> EtiquetasIds) 
         {
             try
             {
@@ -117,14 +117,13 @@ namespace APIBLOG.Services
                     return false;
                 else
                 {
-                    foreach (var categoria in postActual.IdCategoria.ToList())
+                    foreach (var etiqueta in postActual.IdEtiqueta.ToList())
                     {
-                        //elimina tanto los posts de la coleccion de categorias,
-                        //como la categoria de la coleccion de posts
-                        categoria.IdPosts.Remove(postActual);
-                        postActual.IdCategoria.Remove(categoria);
+                        //elimina tanto los posts de la coleccion de etiquetas,
+                        //como la etiqueta de la coleccion de posts
+                        etiqueta.IdPosts.Remove(postActual);
+                        postActual.IdEtiqueta.Remove(etiqueta);
                     }
-
                     //modificar los atributos del post
                     postActual.Titulo = post.Titulo ?? postActual.Titulo;
                     postActual.Activo = post.Activo ?? postActual.Activo;
@@ -132,16 +131,16 @@ namespace APIBLOG.Services
                     postActual.Imagen = post.Imagen ?? postActual.Imagen;
                     postActual.FechaActualizacion = DateTime.UtcNow;
 
-                    //Actualizar las colecciones de categoria y de posts.
-                    foreach (var categoriaId in CategoriasIds)
+                    //Actualizar las colecciones de etiquetas y de posts.
+                    foreach (var etiquetaId in EtiquetasIds)
                     {
-                        //buscar y asignar las categorias recibidas al post
-                        var categoria = await _context.Categorias.FindAsync(categoriaId);
-                        if (categoria!=null)
+                        //buscar y asignar las etiquetas recibidas al post
+                        var etiqueta = await _context.Etiquetas.FindAsync(etiquetaId);
+                        if (etiqueta!=null)
                         {
                             
-                            postActual.IdCategoria.Add(categoria);
-                            categoria.IdPosts.Add(postActual);
+                            postActual.IdEtiqueta.Add(etiqueta);
+                            etiqueta.IdPosts.Add(postActual);
                         }
                     }
 
@@ -177,10 +176,10 @@ namespace APIBLOG.Services
                 }
                 else
                 {
-                    // Eliminar el post de la colección de categorías asociadas
-                    foreach (var categoria in postAEliminar.IdCategoria)
+                    // Eliminar el post de la colección de etiquetas asociadas
+                    foreach (var etiqueta in postAEliminar.IdEtiqueta)
                     {
-                        categoria.IdPosts.Remove(postAEliminar);
+                        etiqueta.IdPosts.Remove(postAEliminar);
                     }
 
                     //Eliminar y guardar cambios en caso de encontrar el post
@@ -214,7 +213,6 @@ namespace APIBLOG.Services
                 {
                     return posts;
                 }
-
             }
             catch (DbException ex)
             {
