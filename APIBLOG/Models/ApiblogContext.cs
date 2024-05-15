@@ -38,7 +38,7 @@ public partial class ApiblogContext : DbContext
 
             entity.Property(e => e.Nombre).HasMaxLength(50);
 
-            entity.HasMany(d => d.IdPosts).WithMany(p => p.IdCategoria)
+            entity.HasMany(d => d.IdPosts).WithMany(p => p.IdEtiqueta)
                 .UsingEntity<Dictionary<string, object>>(
                     "PostEtiqueta",
                     r => r.HasOne<Post>().WithMany()
@@ -54,6 +54,16 @@ public partial class ApiblogContext : DbContext
                         j.HasKey("IdEtiqueta", "IdPost").HasName("PK__POST_ETI__6C4DE1C4DCBE7F07");
                         j.ToTable("POST_ETIQUETA");
                     });
+        });
+
+        modelBuilder.Entity<Categoria>(entity =>
+        {
+            entity.HasKey(e => e.IdCategoria).HasName("PK__CATEGORI__DDBEFBF9A4E0BB96");
+            entity.ToTable("CATEGORIA");
+
+            entity.Property(e => e.Nombre).HasMaxLength(50);
+            entity.Property(e=>e.Descripcion).HasMaxLength(150);
+            entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
         });
 
         modelBuilder.Entity<Comentario>(entity =>
@@ -101,6 +111,10 @@ public partial class ApiblogContext : DbContext
             entity.HasOne(d => d.IdUsuarioNavigation).WithMany(p => p.Posts)
                 .HasForeignKey(d => d.IdUsuario)
                 .HasConstraintName("FK__POST__IdUsuario__619B8048");
+
+            entity.HasOne(d => d.IdCategoriaNavigation).WithMany(p => p.Posts)
+                .HasForeignKey(d => d.IdCategoria)
+                .HasConstraintName("FK__POST__IdCategoria__619B8050");
         });
 
         modelBuilder.Entity<Usuario>(entity =>
@@ -111,6 +125,7 @@ public partial class ApiblogContext : DbContext
 
             entity.Property(e => e.IdUsuario).HasDefaultValueSql("(newid())");
             entity.Property(e => e.Contraseña).HasMaxLength(20);
+            entity.Property(e => e.Rol).HasMaxLength(20);
             entity.Property(e => e.CorreoElectronico).HasMaxLength(100);
             entity.Property(e => e.FechaRegistro).HasColumnType("datetime");
             entity.Property(e => e.NombreUsuario)

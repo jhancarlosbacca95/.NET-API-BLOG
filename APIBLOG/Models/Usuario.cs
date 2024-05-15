@@ -13,6 +13,7 @@ public partial class Usuario
     public string? CorreoElectronico { get; set; }
 
     public string? Contraseña { get; set; }
+    public string? Rol { get; set; }
 
     public DateTime? FechaRegistro { get; set; }
 

@@ -80,12 +80,12 @@ namespace APIBLOG.Controllers
             }
         }
 
-        [HttpGet("PorCategorias")]
-        public async Task<IActionResult> ObtenerPorId([FromQuery] List<int> idCategorias)
+        [HttpGet("PorEtiquetas")]
+        public async Task<IActionResult> ObtenerPorId([FromQuery] List<int> idEtiquetas)
         {
             try
             {
-                var posts = await _postService.GetByCategoria(idCategorias);
+                var posts = await _postService.GetByEtiquetas(idEtiquetas);
                 if (posts == null)
                 {
                     return NotFound();
@@ -101,18 +101,18 @@ namespace APIBLOG.Controllers
             }
         }
 
-        public class PostConCategoriasDTO
+        public class PostConEtiquetassDTO
         {
             public Post Post { get; set; }
-            public List<int> CategoriasIds { get; set; }
+            public List<int> EtiquetasIds { get; set; }
         }
 
         [HttpPost]
-        public async Task<IActionResult> GuardarPost([FromBody] PostConCategoriasDTO postYCategoria)
+        public async Task<IActionResult> GuardarPost([FromBody] PostConEtiquetassDTO postYCategoria)
         {
             try
             {
-                var resultado = await _postService.Save(postYCategoria.Post, postYCategoria.CategoriasIds);
+                var resultado = await _postService.Save(postYCategoria.Post, postYCategoria.EtiquetasIds);
                 if (!resultado)
                 {
                     return BadRequest();
@@ -129,11 +129,11 @@ namespace APIBLOG.Controllers
         }
 
         [HttpPut("{idPost}")]
-        public async Task<IActionResult> Modificar([FromBody] PostConCategoriasDTO postConCategoriasDTO, int idPost)
+        public async Task<IActionResult> Modificar([FromBody] PostConEtiquetassDTO postConEtiquetasDTO, int idPost)
         {
             try
             {
-                var resultado = await _postService.Update(idPost, postConCategoriasDTO.Post, postConCategoriasDTO.CategoriasIds);
+                var resultado = await _postService.Update(idPost, postConEtiquetasDTO.Post, postConEtiquetasDTO.EtiquetasIds);
                 if (!resultado)
                 {
                     return NotFound("No se encontro el Post a eliminar");

@@ -9,6 +9,7 @@ public partial class Post
     public int IdPost { get; set; }
 
     public Guid? IdUsuario { get; set; }
+    public int IdCategoria {  get; set; }
 
     public string? Titulo { get; set; }
 
@@ -25,6 +26,8 @@ public partial class Post
     public virtual ICollection<Comentario> Comentarios { get; set; } = new List<Comentario>();
     [JsonIgnore]
     public virtual Usuario? IdUsuarioNavigation { get; set; }
+    [JsonIgnore]
+    public virtual Categoria? IdCategoriaNavigation { get; set; }
     [JsonIgnore]
     public virtual ICollection<Etiqueta> IdEtiqueta { get; set; } = new List<Etiqueta>();
 }

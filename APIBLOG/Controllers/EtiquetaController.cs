@@ -12,8 +12,8 @@ namespace APIBLOG.Controllers
     public class EtiquetaController : ControllerBase
     {
         private readonly IEtiquetaService _etiquetaService;
-        public EtiquetaController(IEtiquetaService categoriaS) {
-            _etiquetaService = categoriaS;
+        public EtiquetaController(IEtiquetaService etiquetaService) {
+            _etiquetaService = etiquetaService;
         }
         [HttpGet]
         public async Task<IActionResult> Listar() 
@@ -44,13 +44,12 @@ namespace APIBLOG.Controllers
                 bool respuesta = await _etiquetaService.Save(eti);
                 if (!respuesta) 
                 {
-                    return NotFound(new { Message = "No se pudo guardar la categoria" });
+                    return NotFound(new { Message = "No se pudo guardar la etiqueta" });
                 }
                 else
                 {
                     return Ok(new { Message = "Etiqueta guardada con exito" });
                 }
-
             }
             catch (Exception ex)
             {
