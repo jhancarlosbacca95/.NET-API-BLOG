@@ -13,7 +13,7 @@ public partial class Usuario
     public string? CorreoElectronico { get; set; }
 
     public string? Contraseña { get; set; }
-    public string? Rol { get; set; }
+    public int IdRol { get; set; }
 
     public DateTime? FechaRegistro { get; set; }
 
@@ -27,4 +27,6 @@ public partial class Usuario
 
     [JsonIgnore]
     public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
+
+    public virtual Rol? IdRolNavigation { get; set; }
 }

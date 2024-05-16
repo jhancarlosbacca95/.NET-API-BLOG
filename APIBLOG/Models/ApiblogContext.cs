@@ -66,6 +66,14 @@ public partial class ApiblogContext : DbContext
             entity.Property(e => e.FechaCreacion).HasColumnType("datetime");
         });
 
+        modelBuilder.Entity<Rol>(entity =>
+        {
+            entity.HasKey(e => e.IdRol).HasName("PK__ROL__DDBEFBF9A4E0BB74");
+            entity.ToTable("ROL");
+
+            entity.Property(e => e.Nombre).HasMaxLength(50);
+        });
+
         modelBuilder.Entity<Comentario>(entity =>
         {
             entity.HasKey(e => e.IdComentario).HasName("PK__COMENTAR__DDBEFBF9A4E0BB96");
@@ -125,12 +133,15 @@ public partial class ApiblogContext : DbContext
 
             entity.Property(e => e.IdUsuario).HasDefaultValueSql("(newid())");
             entity.Property(e => e.Contraseña).HasMaxLength(20);
-            entity.Property(e => e.Rol).HasMaxLength(20);
             entity.Property(e => e.CorreoElectronico).HasMaxLength(100);
             entity.Property(e => e.FechaRegistro).HasColumnType("datetime");
             entity.Property(e => e.NombreUsuario)
                 .HasMaxLength(50)
                 .HasColumnName("Usuario");
+            entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Usuarios)
+                .HasForeignKey(d => d.IdRol)
+                .HasConstraintName("FK__USUARIO__IdRol__619B8048");
+
         });
 
         OnModelCreatingPartial(modelBuilder);
