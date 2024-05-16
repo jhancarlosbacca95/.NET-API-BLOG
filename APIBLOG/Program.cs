@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +18,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSqlServer<ApiblogContext>(builder.Configuration.GetConnectionString("conexion"));
+builder.Services.AddControllers().AddJsonOptions(opt =>
+{
+    opt.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+});
+
 
 
 builder.Services.AddScoped<IUsuarioService,UsuarioService>();
@@ -24,6 +30,7 @@ builder.Services.AddScoped<IEtiquetaService,EtiquetaService>();
 builder.Services.AddScoped<IPostService,PostService>();
 builder.Services.AddScoped<IAutorizacionService, AutorizacionService>();
 builder.Services.AddScoped<IComentarioService, ComentarioService>();
+builder.Services.AddScoped<IRolService, RolService>();
 
 var key = builder.Configuration.GetValue<string>("JwtSettings:key");
 var keyBytes = Encoding.ASCII.GetBytes(key);

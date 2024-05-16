@@ -159,7 +159,8 @@ public partial class ApiblogContext : DbContext
                     CorreoElectronico = "admin@example.com",
                     Contraseña = "AdminPass123",
                     FechaRegistro = DateTime.Now,
-                    IdRol = 1
+                    IdRol = 1,
+                    Activo = true
                 },
                 new Usuario
                 {
@@ -168,7 +169,8 @@ public partial class ApiblogContext : DbContext
                     CorreoElectronico = "superadmin@example.com",
                     Contraseña = "SuperAdminPass123",
                     FechaRegistro = DateTime.Now,
-                    IdRol = 2
+                    IdRol = 2,
+                    Activo = true
                 },
                 new Usuario
                 {
@@ -177,7 +179,8 @@ public partial class ApiblogContext : DbContext
                     CorreoElectronico = "usuario@example.com",
                     Contraseña = "UserPass123",
                     FechaRegistro = DateTime.Now,
-                    IdRol = 3
+                    IdRol = 3,
+                    Activo = true
                 }
             );
 

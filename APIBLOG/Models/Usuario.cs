@@ -27,6 +27,5 @@ public partial class Usuario
 
     [JsonIgnore]
     public virtual ICollection<Post> Posts { get; set; } = new List<Post>();
-
     public virtual Rol? IdRolNavigation { get; set; }
 }

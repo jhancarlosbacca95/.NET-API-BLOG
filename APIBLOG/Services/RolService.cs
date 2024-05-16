@@ -1,10 +1,11 @@
 ﻿using APIBLOG.Models;
+using APIBLOG.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using System.Data.Common;
 
 namespace APIBLOG.Services
 {
-    public class RolService
+    public class RolService:IRolService
     {
         private readonly ApiblogContext _context;
 

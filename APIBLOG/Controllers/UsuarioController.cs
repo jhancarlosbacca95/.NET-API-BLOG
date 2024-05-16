@@ -17,7 +17,7 @@ namespace APIBLOG.Controllers
         {
             _usuarioService = usuarioService;
         }
-        //[Authorize]
+
         [HttpGet]
         public async Task<IActionResult> Listar()
         {
@@ -31,6 +31,21 @@ namespace APIBLOG.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> ObternerUsuarioPorId(Guid id)
+        {
+            try
+            {
+                var usuario = await _usuarioService.GetbyId(id);
+                return Ok(new { message = "Ok", Response = usuario });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+
         [HttpPost]
         public async Task<IActionResult> Agregar([FromBody] Usuario us)
         {
@@ -52,6 +67,29 @@ namespace APIBLOG.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
+
+
+        [HttpPut("CambioDeRol/{id}")]
+        public async Task<IActionResult> ModificarRol(Guid id, [FromBody] int rolId)
+        {
+            try
+            {
+                bool Actualizado = await _usuarioService.UpdateRol(id, rolId);
+                if (Actualizado == false)
+                {
+                    return NotFound(new { message = "No se encontro ningun usuario con ese Id" });
+                }
+                else
+                {
+                    return Ok(new { message = "Rol del usuario Actualizado" });
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
+            }
+        }
+
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] Usuario us)
         {

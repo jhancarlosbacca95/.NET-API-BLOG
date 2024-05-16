@@ -1,6 +1,7 @@
 ﻿using APIBLOG.Models;
 using APIBLOG.Models.Custom;
 using APIBLOG.Services.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualBasic;
 using System.IdentityModel.Tokens.Jwt;
@@ -22,13 +23,14 @@ namespace APIBLOG.Services
             _configuration = configuration;
         }
 
-        private string GenerarToken(string idUsuario) 
+        private string GenerarToken(string idUsuario,string rol) 
         {
             var key = _configuration.GetValue<string>("JwtSettings:key");
             var keyBytes = Encoding.ASCII.GetBytes(key);
 
             var claims = new ClaimsIdentity();
             claims.AddClaim(new Claim(ClaimTypes.NameIdentifier, idUsuario));
+            claims.AddClaim(new Claim(ClaimTypes.Role, rol));
 
             var credencialesToken = new SigningCredentials(
                    new SymmetricSecurityKey(keyBytes),
@@ -53,17 +55,19 @@ namespace APIBLOG.Services
         }
         public async Task<AutorizacionResponse> DevolverToken(AutorizacionRequest autorizacion)
         {
-            var usuario_encontrado = _context.Usuarios.FirstOrDefault(x=>
+            var usuario_encontrado = _context.Usuarios
+                .Include(u=>u.IdRolNavigation)
+                .FirstOrDefault(x=>
             x.NombreUsuario == autorizacion.Usuario && 
-            x.Contraseña == autorizacion.Password
-            );
+            x.Contraseña == autorizacion.Password);
 
             if (usuario_encontrado==null)
             {
                 return await Task.FromResult<AutorizacionResponse>(null);
             }
 
-            string tokenCreado = GenerarToken(usuario_encontrado.IdUsuario.ToString());
+            string rol = usuario_encontrado.IdRolNavigation.Nombre;
+            string tokenCreado = GenerarToken(usuario_encontrado.IdUsuario.ToString(),rol);
             string refreshTokenCreado = GenerarRefreshToken();
 
             //return new AutorizacionResponse { Token = tokenCreado, Resultado = true, Msg = "Ok" };
@@ -117,8 +121,16 @@ namespace APIBLOG.Services
             if (refreshTokenEncontrado == null)
                 return new AutorizacionResponse { Resultado = false, Msg = "No existe refreshToken" };
 
+            // Obtener el usuario y su rol
+            var usuario = await _context.Usuarios.Include(u => u.IdRolNavigation)
+                                                 .FirstOrDefaultAsync(u => u.IdUsuario == idUsuario);
+
+            if (usuario == null)
+                return new AutorizacionResponse { Resultado = false, Msg = "Usuario no encontrado" };
+
+            var rol = usuario.IdRolNavigation.Nombre;
             var refreshTokenCreado = GenerarRefreshToken();
-            var tokenCreado = GenerarToken(idUsuario.ToString());
+            var tokenCreado = GenerarToken(idUsuario.ToString(),rol);
 
             return await GuardarHistorialRefreshToken(idUsuario, tokenCreado, refreshTokenCreado);
         }

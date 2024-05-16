@@ -126,6 +126,7 @@ namespace APIBLOG.Services
                     }
                     //modificar los atributos del post
                     postActual.Titulo = post.Titulo ?? postActual.Titulo;
+                    postActual.IdCategoria = post.IdCategoria;
                     postActual.Activo = post.Activo ?? postActual.Activo;
                     postActual.Contenido = post.Contenido ?? postActual.Contenido;
                     postActual.Imagen = post.Imagen ?? postActual.Imagen;

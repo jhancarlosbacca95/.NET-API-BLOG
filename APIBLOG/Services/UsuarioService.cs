@@ -1,5 +1,6 @@
 ﻿using APIBLOG.Models;
 using APIBLOG.Services.Interfaces;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ActionConstraints;
 using Microsoft.EntityFrameworkCore;
@@ -19,11 +20,36 @@ namespace APIBLOG.Services
         {
             try
             {
-                return await _context.Usuarios.ToListAsync();
+                return await _context.Usuarios.Include(u=>u.IdRolNavigation).ToListAsync();
             }
-            catch (Exception ex)
+            catch (DbException ex)
             {
-                throw new Exception("Error al intentar obtener los datos de la base de datos", ex);
+                throw new Exception($"Error al intentar obtener los datos de la base de datos{ex.Message}");
+            }catch(Exception ex)
+            {
+                throw new Exception("Error",ex);
+            }
+        }
+
+        public async Task<Usuario>GetbyId(Guid id)
+        {
+            try
+            {
+
+                var usuario = await _context.Usuarios.FindAsync(id);
+
+                if (usuario != null)
+                {
+                    // Cargar el rol relacionado explícitamente
+                    await _context.Entry(usuario).Reference(u => u.IdRolNavigation).LoadAsync();
+                }
+
+                return usuario;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
@@ -31,6 +57,7 @@ namespace APIBLOG.Services
         {
             try
             {
+                us.IdRol = 3;
                 _context.Add(us);
                 await _context.SaveChangesAsync();
                 return true;
@@ -100,6 +127,33 @@ namespace APIBLOG.Services
             catch (Exception ex)
             {
                 throw new Exception("Error al intentar eliminar el usuario ", ex);
+            }
+        }
+
+        public async Task<bool> UpdateRol(Guid idUsuario,int idRol)
+        {
+            try
+            {
+                var UsuarioAModificar = await _context.Usuarios.FindAsync(idUsuario);
+                if (UsuarioAModificar == null)
+                {
+                    return false;
+                }
+                else
+                {
+                    UsuarioAModificar.IdRol = idRol;
+                    _context.Usuarios.Update(UsuarioAModificar);
+                    await _context.SaveChangesAsync();
+                    return true;
+                }
+            }
+            catch (DbException ex)
+            {
+                throw new Exception($"Ocurrio un error al intentar modificar el rol del usuario, Error:{ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error al intentar eliminar el rol del usuario ", ex);
             }
         }
 
