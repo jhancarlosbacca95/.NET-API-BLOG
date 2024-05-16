@@ -25,6 +25,8 @@ public partial class ApiblogContext : DbContext
 
     public virtual DbSet<Usuario> Usuarios { get; set; }
 
+    public virtual DbSet<Rol> Roles { get; set; }
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     { }
 
@@ -72,6 +74,12 @@ public partial class ApiblogContext : DbContext
             entity.ToTable("ROL");
 
             entity.Property(e => e.Nombre).HasMaxLength(50);
+
+            entity.HasData(
+                new Rol { IdRol = 1, Nombre = "Admin" },
+                new Rol { IdRol = 2, Nombre = "SuperAdmin" },
+                new Rol { IdRol = 3, Nombre = "Usuario" }
+            );
         });
 
         modelBuilder.Entity<Comentario>(entity =>
@@ -141,6 +149,37 @@ public partial class ApiblogContext : DbContext
             entity.HasOne(d => d.IdRolNavigation).WithMany(p => p.Usuarios)
                 .HasForeignKey(d => d.IdRol)
                 .HasConstraintName("FK__USUARIO__IdRol__619B8048");
+
+            // Adding initial users
+            entity.HasData(
+                new Usuario
+                {
+                    IdUsuario = Guid.NewGuid(),
+                    NombreUsuario = "admin_user",
+                    CorreoElectronico = "admin@example.com",
+                    Contraseña = "AdminPass123",
+                    FechaRegistro = DateTime.Now,
+                    IdRol = 1
+                },
+                new Usuario
+                {
+                    IdUsuario = Guid.NewGuid(),
+                    NombreUsuario = "superadmin_user",
+                    CorreoElectronico = "superadmin@example.com",
+                    Contraseña = "SuperAdminPass123",
+                    FechaRegistro = DateTime.Now,
+                    IdRol = 2
+                },
+                new Usuario
+                {
+                    IdUsuario = Guid.NewGuid(),
+                    NombreUsuario = "usuario_user",
+                    CorreoElectronico = "usuario@example.com",
+                    Contraseña = "UserPass123",
+                    FechaRegistro = DateTime.Now,
+                    IdRol = 3
+                }
+            );
 
         });
 
