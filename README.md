@@ -1,7 +1,7 @@
 
 # API-BLOG
 
-API-BLOG es una aplicación web construida con .NET 8 que permite la gestión de blogs. Incluye características como gestión de usuarios, roles y permisos, autenticación y autorización usando JWT, así como la generación y gestión de tokens y refresh tokens.
+API-BLOG es una API construida con .NET 8 que permite la gestión de Posts. Incluye características como gestión de usuarios, roles y permisos, autenticación y autorización usando JWT, así como la generación y gestión de tokens y refresh tokens.
 
 ## Tabla de Contenidos
 
