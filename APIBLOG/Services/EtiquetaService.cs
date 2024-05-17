@@ -31,11 +31,19 @@ namespace APIBLOG.Services
             
         }
 
-        public async Task<bool> Save(Etiqueta cat)
+        public async Task<bool> Save(Etiqueta eti)
         {
             try
             {
-                _context.Etiquetas.Add(cat);
+                //Convertir el nombre a minisculas para compararlo luego
+                var nombreEtiqueta = eti.Nombre.ToLower();
+
+                bool etiquetaExistente = await _context.Etiquetas.AnyAsync(e => e.Nombre.ToLower() == nombreEtiqueta);
+                if(etiquetaExistente)
+                {
+                    throw new Exception("Etiqueta existente con ese nombre.");
+                }
+                _context.Etiquetas.Add(eti);
                 await _context.SaveChangesAsync();
                 return true;
             }
@@ -49,7 +57,7 @@ namespace APIBLOG.Services
             }
         }
 
-        public async Task<bool> Update(int id,Etiqueta cat) 
+        public async Task<bool> Update(int id,Etiqueta eti) 
         {
             try
             {
@@ -60,7 +68,14 @@ namespace APIBLOG.Services
                 }
                 else
                 {
-                    etiActual.Nombre = cat.Nombre ?? etiActual.Nombre;
+                    var ExistenteNombre = eti.Nombre.ToLower();
+                    bool etiquetaExistente = await _context.Etiquetas.AnyAsync(e => e.Nombre.ToLower() == ExistenteNombre);
+                    if(etiquetaExistente)
+                    {
+                        throw new Exception("Ya existe una etiqueta con este nombre");
+                    }
+
+                    etiActual.Nombre = eti.Nombre ?? etiActual.Nombre;
                     _context.Etiquetas.Update(etiActual);
                     await _context.SaveChangesAsync();
                     return true;

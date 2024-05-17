@@ -1,5 +1,6 @@
 ﻿using APIBLOG.Models;
 using APIBLOG.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -16,7 +17,7 @@ namespace APIBLOG.Controllers
         {
             _comentarioService = comentarioService;
         }
-
+        [Authorize]
         [HttpGet("{idCom}")]
         public async Task<IActionResult> ObtenerComentarioPorId(int idCom)
         {
@@ -37,7 +38,7 @@ namespace APIBLOG.Controllers
                 throw new Exception("Ocurrio un error ", ex);
             }
         }
-
+        [Authorize(Roles ="Admin,SuperAdmin")]
         [HttpGet("ByUser/{idUser}")]
         public async Task<IActionResult> ObtenerComentarioPorUsuario(Guid idUser)
         {
@@ -59,6 +60,7 @@ namespace APIBLOG.Controllers
             }
         }
 
+
         [HttpGet("ByPost/{idPost}")]
         public async Task<IActionResult> ObtenerComentarioPorPost(int idPost)
         {
@@ -79,6 +81,7 @@ namespace APIBLOG.Controllers
                 throw new Exception("Ocurrio un error ", ex);
             }
         }
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> GuardarComentario(Comentario comentario)
         {
@@ -101,6 +104,7 @@ namespace APIBLOG.Controllers
             }
         }
 
+        [Authorize]
         [HttpPut("{idCom}")]
         public async Task<IActionResult> ModificarComentario(int idCom, [FromBody] Comentario comentario)
         {
@@ -121,7 +125,7 @@ namespace APIBLOG.Controllers
                 throw new Exception("Ocurrio un error ", ex);
             }
         }
-
+        [Authorize]
         [HttpDelete("{idCom}")]
         public async Task<IActionResult> EliminarComentario(int idCom)
         {

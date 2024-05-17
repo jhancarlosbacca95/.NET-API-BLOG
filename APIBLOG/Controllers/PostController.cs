@@ -1,5 +1,6 @@
 ﻿using APIBLOG.Models;
 using APIBLOG.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Xml.Linq;
@@ -58,7 +59,7 @@ namespace APIBLOG.Controllers
                 throw new Exception("Error en el servidor", ex);
             }
         }
-
+        
         [HttpGet("PorUsuario{idUsuario}")]
         public async Task<IActionResult> ObtenerPorId(Guid idUsuario)
         {
@@ -107,6 +108,7 @@ namespace APIBLOG.Controllers
             public List<int> EtiquetasIds { get; set; }
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> GuardarPost([FromBody] PostConEtiquetassDTO postYCategoria)
         {
@@ -127,7 +129,7 @@ namespace APIBLOG.Controllers
                 throw new Exception("Error en el servidor", ex);
             }
         }
-
+        [Authorize]
         [HttpPut("{idPost}")]
         public async Task<IActionResult> Modificar([FromBody] PostConEtiquetassDTO postConEtiquetasDTO, int idPost)
         {
@@ -148,7 +150,7 @@ namespace APIBLOG.Controllers
                 throw new Exception("Error en el servidor", ex);
             }
         }
-
+        [Authorize]
         [HttpDelete("{idPost}")]
         public async Task<IActionResult> EliminarPost(int idPost)
         {

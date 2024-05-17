@@ -18,6 +18,7 @@ public partial class ApiblogContext : DbContext
     public virtual DbSet<Etiqueta> Etiquetas { get; set; }
 
     public virtual DbSet<Comentario> Comentarios { get; set; }
+    public virtual DbSet<Categoria> Categorias { get; set; }
 
     public virtual DbSet<HistorialRefreshToken> HistorialRefreshTokens { get; set; }
 

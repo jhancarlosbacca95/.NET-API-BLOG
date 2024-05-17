@@ -18,6 +18,7 @@ namespace APIBLOG.Controllers
             _usuarioService = usuarioService;
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> Listar()
         {
@@ -32,6 +33,7 @@ namespace APIBLOG.Controllers
             }
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> ObternerUsuarioPorId(Guid id)
         {
@@ -68,7 +70,7 @@ namespace APIBLOG.Controllers
             }
         }
 
-
+        [Authorize(Roles ="SuperAdmin")]
         [HttpPut("CambioDeRol/{id}")]
         public async Task<IActionResult> ModificarRol(Guid id, [FromBody] int rolId)
         {
@@ -89,7 +91,7 @@ namespace APIBLOG.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { message = ex.Message });
             }
         }
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(Guid id, [FromBody] Usuario us)
         {
@@ -110,7 +112,7 @@ namespace APIBLOG.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError,new { message = ex.Message });
             }
         }
-
+        [Authorize(Roles ="Admin,SuperAdmin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(Guid id)
         {

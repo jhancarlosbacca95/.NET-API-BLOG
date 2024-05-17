@@ -1,4 +1,5 @@
 ﻿using APIBLOG.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,6 +16,7 @@ namespace APIBLOG.Controllers
             _rolService = rolService;
         }
 
+        [Authorize(Roles ="SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> ObtenerRoles()
         {

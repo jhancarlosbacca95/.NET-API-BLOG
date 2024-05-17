@@ -1,6 +1,7 @@
 ﻿using APIBLOG.Models;
 using APIBLOG.Services;
 using APIBLOG.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Identity.Client;
@@ -15,6 +16,7 @@ namespace APIBLOG.Controllers
         public EtiquetaController(IEtiquetaService etiquetaService) {
             _etiquetaService = etiquetaService;
         }
+
         [HttpGet]
         public async Task<IActionResult> Listar() 
         {
@@ -35,7 +37,7 @@ namespace APIBLOG.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
             }
         }
-
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Save([FromBody]Etiqueta eti) 
         {
@@ -56,7 +58,7 @@ namespace APIBLOG.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
             }
         }
-
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id,[FromBody] Etiqueta eti)
         {
@@ -77,7 +79,7 @@ namespace APIBLOG.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, new { Message = ex.Message });
             }
         }
-
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
