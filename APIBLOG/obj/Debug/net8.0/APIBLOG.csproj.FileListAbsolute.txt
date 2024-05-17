@@ -135,3 +135,4 @@ C:\C#\APIBLOG\APIBLOG\obj\Debug\net8.0\refint\APIBLOG.dll
 C:\C#\APIBLOG\APIBLOG\obj\Debug\net8.0\APIBLOG.pdb
 C:\C#\APIBLOG\APIBLOG\obj\Debug\net8.0\APIBLOG.genruntimeconfig.cache
 C:\C#\APIBLOG\APIBLOG\obj\Debug\net8.0\ref\APIBLOG.dll
+C:\C#\APIBLOG\APIBLOG\obj\Debug\net8.0\APIBLOG.sourcelink.json

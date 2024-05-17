@@ -60,7 +60,7 @@ namespace APIBLOG.Controllers
             }
         }
         
-        [HttpGet("PorUsuario{idUsuario}")]
+        [HttpGet("PorUsuario/{idUsuario}")]
         public async Task<IActionResult> ObtenerPorId(Guid idUsuario)
         {
             try
@@ -101,6 +101,29 @@ namespace APIBLOG.Controllers
                 throw new Exception("Error en el servidor", ex);
             }
         }
+
+        [HttpGet("PorCategoria/{idCat}")]
+        public async Task<IActionResult> ObtenerPorCategoria(int idCat)
+        {
+            try
+            {
+                var posts = await _postService.GetbyCategoria(idCat);
+                if (posts == null)
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    return Ok(new { Message = "Ok", Response = posts });
+                }
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Error en el servidor", ex);
+            }
+        }
+
+
 
         public class PostConEtiquetassDTO
         {

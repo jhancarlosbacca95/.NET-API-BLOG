@@ -33,6 +33,23 @@ namespace APIBLOG.Services
             }
         }
 
+        public async Task<ICollection<Post>> GetbyCategoria(int catId)
+        {
+            try 
+            {
+                var posts = await _context.Posts.Where(p => p.IdCategoria == catId).ToListAsync();
+                return posts;
+            }
+            catch (DbException ex)
+            {
+                throw new Exception($"Ocurrio un error con la base de datos, Error: {ex.Message}");
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Ha ocurrido un error", ex);
+            }
+        }
+
         public async Task<Post> GetById(int id)
         {
             try

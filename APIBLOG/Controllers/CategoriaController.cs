@@ -102,6 +102,7 @@ namespace APIBLOG.Controllers
         }
 
         [Authorize(Roles = "SuperAdmin,Admin")]
+        [HttpDelete("{id}")]
         public async Task<IActionResult> Eliminar(int id)
         {
             try
